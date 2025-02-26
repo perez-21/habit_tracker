@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Habit" ALTER COLUMN "startDate" SET DATA TYPE DATE;
+
+-- AlterTable
+ALTER TABLE "HabitLog" ALTER COLUMN "date" SET DATA TYPE DATE;

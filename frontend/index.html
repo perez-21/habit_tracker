@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habit Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Cal-Heatmap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/cal-heatmap/dist/cal-heatmap.css"
+    />
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/index.html">Habit Tracker</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Habits</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#progress-section">Progress</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#new-habit-container">New</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Habits page -->
+    <div class="container mt-4">
+      <h1 class="mb-4">Track Your Habits</h1>
+
+      <!-- List of Habits -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Your Habits</h5>
+
+          <ul class="list-group" id="habit-list"></ul>
+        </div>
+      </div>
+
+      <!-- Form to Add New Habit -->
+      <div class="card mb-4" id="new-habit-container">
+        <div class="card-body">
+          <h5 class="card-title">Add a New Habit</h5>
+          <form id="habit-form" method="post">
+            <div class="mb-3">
+              <label for="title" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="e.g. Drink Water"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="habitFrequency" class="form-label">Frequency</label>
+              <select class="form-select" id="habitFrequency">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+
+            <div class="mb-3 d-none" id="weekly-option">
+              <label for="" class="form-label">Repeat on: </label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="monday"
+                  id="monday"
+                  checked
+                />
+                <label class="form-check-label" for="monday"> Monday </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="tuesday"
+                  id="tuesday"
+                  checked
+                />
+                <label class="form-check-label" for="tuesday"> Tuesday </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="wednesday"
+                  id="wednesday"
+                  checked
+                />
+                <label class="form-check-label" for="wednesday">
+                  Wednesday
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="thursday"
+                  id="thursday"
+                  checked
+                />
+                <label class="form-check-label" for="thursday">
+                  Thursday
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="friday"
+                  id="friday"
+                  checked
+                />
+                <label class="form-check-label" for="friday"> Friday </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="saturday"
+                  id="saturday"
+                  checked
+                />
+                <label class="form-check-label" for="saturday">
+                  Saturday
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="sunday"
+                  id="sunday"
+                  checked
+                />
+                <label class="form-check-label" for="sunday"> Sunday </label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="startDate" class="form-label">Start Date</label>
+              <input
+                class="form-control"
+                type="date"
+                id="startDate"
+                name="startDate"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="goalDays" class="form-label"
+                >Ends after how many days?</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="goalDays"
+                name="goalDays"
+                min="1"
+                max="365"
+                placeholder="Ignore to never stop"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Habit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress page -->
+    <div class="container-fluid bg-body-tertiary pt-3" id="progress-section">
+      <div class="container">
+        <h2 class="text-center mb-4">Habit Progress</h2>
+
+        <div class="row">
+          <!-- Completion Stats -->
+          <div class="col-md-6">
+            <div class="card p-3 mb-3">
+              <div class="mb-3">
+                <label for="stat-select" class="form-label">Pick a habit</label>
+                <select
+                  id="stat-select"
+                  class="form-select"
+                  aria-label="Default select example"
+                >
+                  <option selected>All Habits</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Completion Rate -->
+          <div class="col-md-6 d-none" id="completion-container">
+            <div class="card p-3 mb-3">
+              <h5>Completion Rate</h5>
+              <div class="progress">
+                <div
+                  id="completionRateBar"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                >
+                  <span id="completionRateText">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart Section -->
+          <div class="card p-3 mb-5" id="habit-chart-container">
+            <h5 class="mb-3">Progress Over Time</h5>
+            <canvas id="habitChart"></canvas>
+          </div>
+
+          <!-- Heatmap Section -->
+          <div
+            class="container mt-4 d-none card p-5 mb-5"
+            id="calendar-heatmap-container"
+          >
+            <h5 class="mb-3">Heatmap</h5>
+            <div id="calendar-heatmap" class="d-flex"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="requests.js"></script>
+    <script src="extras.js"></script>
+    <script src="home.js"></script>
+    <script src="progress.js"></script> -->
+    <script src="app.js"></script>
+  </body>
+</html>
